@@ -49,7 +49,9 @@ public class StudentService {
         PageInfo<Student> pageInfo = new PageInfo<>(students);
         return pageInfo;
     }
-
+        public void  sss(){
+            System.out.println("sdasdasdasdas");
+        }
 
 
     public void addStudent(Student student) {
