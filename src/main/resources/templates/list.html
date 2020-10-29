@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+</head>
+<body>
+
+<input type="button" value="添加" th:onclick="goAdd()">
+        <form th:action="@{/student/studentList}" method="post"  id="selectForm">
+            学生姓名:<input type="text" name="name"  th:value="${name}">
+            <input type="hidden" value="1" name="pageNum" id="pageNum">
+            <input type="submit" value="查询">
+        </form>
+<table border="1px">
+    <tr>
+        <td th:width="100px">学生id</td>
+        <td th:width="100px">学生姓名</td>
+        <td th:width="100px">学生密码</td>
+        <td th:width="100px">学生性别</td>
+        <td th:width="100px">年龄</td>
+        <td th:width="100px">操作</td>
+    </tr>
+    <tr th:each="student:${page.list}">
+        <td th:text="${student.id}"></td>
+        <td th:text="${student.name}"></td>
+        <td th:text="${student.pwd}"></td>
+        <td th:text="${student.sex==1?'男':'女'}"></td>
+        <td th:text="${student.age}"></td>
+        <td><a th:href="@{/goupdate(id=${student.id})}">修改</a>
+            <a th:href="@{/del(id=${student.id})}">删除</a></td>
+    </tr>
+</table>
+<input type="button" value="首页" onclick="goPage(1)">
+<input type="button" value="上一页" th:onclick="'goPage('+${page.prePage}+')'">
+<input type="button" value="下一页" th:onclick="'goPage('+${page.nextPage}+')'">
+<input type="button" value="尾页" th:onclick="'goPage('+${page.pages}+')'">
+</body>
+    <script>
+        function goPage(pageNum) {
+            //将页数设置到查询表单，页码元素上
+            document.getElementById("pageNum").value=pageNum;
+            document.getElementById("selectForm").submit();
+        }
+        function goAdd() {
+            location.href="add";
+        }
+    </script>
+</html>
